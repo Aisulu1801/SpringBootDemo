@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=" http://ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{'/'}">Only.kz</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdowns" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Язык
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="?lng=ru">Рус</a></li>
+              <li><a class="dropdown-item" href="?lng=en">Eng</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{'/login'}" sec:authorize="isAnonymous()">Вход</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{'/profile'}" sec:authorize="isAuthenticated()">Профиль</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="JavaScript:void(0)" onclick="document.getElementById('logoutFormId').submit()" sec:authorize="isAuthenticated()">Выход</a>
+          </li>
+          <form th:action="@{'/logout'}" method="post" id="logoutFormId" sec:authorize="isAuthenticated()"></form>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{'/register'}">Регистрация</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{'/additem'}" sec:authorize="hasRole('ROLE_ADMIN')">Добавить</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" th:text="#{label.category}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownFaculties">
+              <li th:each="cat:${categories}"><a class="dropdown-item"
+                                                    th:text="${cat.category_name}"
+                                                    th:href="@{'/filter-categories/' + ${cat.id}}">
+              </a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a class="nav-link dropdown-toggle" href="#" id="catDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Список товаров
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownFaculties">
+              <li th:each="cat:${categories}"><a class="dropdown-item"
+                                                 th:text="${cat.category_name}"
+                                                 th:href="@{'/categories-for-admin/' + ${cat.id}}">
+              </a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" th:action="@{'/'}">
+          <input class="form-control me-2" name="keyword" th:value="${keyword}" type="search"  placeholder="Хочу купить" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Поиск</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container" layout:fragment="site_content" style="min-height: 600px;">
+
+</div>
+
+<div class="container-fluid">
+  <!-- Remove the container if you want to extend the Footer to full width. -->
+  <div class="container-fluid">
+    <!-- Footer -->
+    <footer
+            class="text-center text-lg-start text-white"
+            style="background-color: #2d2929"
+    >
+      <!-- Grid container -->
+      <div class="container p-4 pb-0">
+        <!-- Section: Links -->
+        <section class="">
+          <!--Grid row-->
+          <div class="row">
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+              <h6 class="text-uppercase mb-4 font-weight-bold" th:href="@{'/'}">
+                Only KZ
+              </h6>
+              <p>
+                In our store you can buy high-quality skin care cosmetics.
+              </p>
+            </div>
+            <!-- Grid column -->
+
+            <hr class="w-100 clearfix d-md-none" />
+
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h6 class="text-uppercase mb-4 font-weight-bold">Каталог</h6>
+              <p>
+                <a class="text-white">Уход за лицом</a>
+              </p>
+              <p>
+                <a class="text-white">Уход за телом</a>
+              </p>
+              <p>
+                <a class="text-white">Уход за волосами</a>
+              </p>
+            </div>
+            <!-- Grid column -->
+
+            <hr class="w-100 clearfix d-md-none" />
+
+            <!-- Grid column -->
+            <hr class="w-100 clearfix d-md-none" />
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+              <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+              <p><i class="fas fa-home mr-3"></i> Ежедневно с 9:00 до 21:00</p>
+              <p><i class="fas fa-envelope mr-3"></i>@only.kazakhstan</p>
+              <p><i class="fas fa-phone mr-3"></i>8 (777) 262-30-60</p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h6 class="text-uppercase mb-4 font-weight-bold">Помощь покупателю</h6>
+              <p><i class="fas fa-home mr-3"></i> Оплата</p>
+              <p><i class="fas fa-envelope mr-3"></i>Доставка</p>
+              <p><i class="fas fa-phone mr-3"></i>Как сделать заказ</p>
+
+            </div>
+          </div>
+          <!--Grid row-->
+        </section>
+        <!-- Section: Links -->
+      </div>
+      <!-- Grid container -->
+
+      <!-- Copyright -->
+      <div
+              class="text-center p-3"
+              style="background-color: rgba(0, 0, 0, 0.2)"
+      >
+        © 2020 Copyright:
+        <a class="text-white" href="https://mdbootstrap.com/"
+        >@Only.kz Online store</a
+        >
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+  </div>
+  <!-- End of .container -->
+</div>
+
+</body>
+</html>

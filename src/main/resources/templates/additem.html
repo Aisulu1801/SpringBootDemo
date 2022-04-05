@@ -1,0 +1,62 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout=" http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout.html">
+
+
+<div layout:fragment="site_content">
+
+    <div class="container">
+
+        <div class="row mt-5">
+            <div class="col-lg-6 offset-3">
+                <form th:action="@{'/additem'}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" class="form-control" name="item_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFileSm" class="form-label">Choose product's image</label>
+                        <input class="form-control form-control-sm" id="formFileSm" type="file" name="productPhoto">
+                    </div>
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <input type="text" class="form-control" name="item_description">
+                    </div>
+                    <div class="form-group">
+                        <label>Price:</label>
+                        <input type="number" class="form-control" name="item_price">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount:</label>
+                        <input type="number" class="form-control" name="item_amount">
+                    </div>
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <select class="form-control" name="category_id">
+                            <option th:each="cat:${categories}" th:text="${cat.category_name}" th:value="${cat.id}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <select class="form-control" name="type_id">
+                            <option th:each="types:${type}" th:text="${types.getType_name()}" th:value="${types.id}"></option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</html>
+
+
+
+

@@ -1,0 +1,50 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout=" http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout.html">
+
+<div layout:fragment="site_content">
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-lg-6 offset-3">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img th:src="@{'/view-photo/' + ${tovary.image}}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p class="card-text" sec:authorize="hasRole('ROLE_ADMIN')"><small class="text-muted" th:text="${tovary.id}"></small></p>
+                                <h5 class="card-title" th:text="${tovary.name}"></h5>
+                                <p class="card-text" th:text="${tovary.description}"></p>
+                                <p class="card-text"><small class="text-muted" th:text="${tovary.price}"></small></p>
+                                <div class="d-flex mb-4" style="max-width: 100px">
+                                    <button class="btn btn-link px-2"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                        <i class="fas fa-minus">-</i>
+                                    </button>
+
+                                    <div class="form-outline">
+                                        <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control" />
+                                    </div>
+
+                                    <button class="btn btn-link px-2"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                        <i class="fas fa-plus">+</i>
+                                    </button>
+                                </div>
+                                <a class="btn btn-light" th:href="@{'/addtocart/' + ${tovary.id}}">Add toCart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</html>
+
+
+

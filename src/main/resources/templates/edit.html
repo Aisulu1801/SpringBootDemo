@@ -1,0 +1,50 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout=" http://ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout.html">
+
+<div layout:fragment="site_content">
+    <div class="container">
+        <div class="row mt-5">
+         <form th:action="@{'/edit/' + ${tovary.id}}" method="post" enctype="multipart/form-data">
+             <div class="col-lg-6 offset-3">
+                 <div class="form-group">
+                     <label>ID:</label>
+                     <input type="number" th:value="${tovary.id}" name="item_id" class="form-control" required>
+                 </div>
+                 <div class="form-group">
+                     <label>Name:</label>
+                     <input type="text" th:value="${tovary.name}" name="item_name" class="form-control" required>
+                 </div>
+                 <div class="input-group">
+                     <label>Description:</label>
+                     <textarea class="form-control" name="item_description" aria-label="With textarea" th:value="${tovary.description}" th:text="${tovary.description}"></textarea>
+                 </div>
+                 <div class="mb-3">
+                     <label for="formFileSm" class="form-label">Choose product's image</label>
+                     <input type="hidden" th:value="${tovary.image}" name="item_name" class="form-control" required>
+                     <input class="form-control form-control-sm" id="formFileSm" type="file" name="productPhoto">
+                 </div>
+
+                 <div class="form-group">
+                     <label>Price:</label>
+                     <input type="number" name="item_price" th:value="${tovary.price}"  class="form-control" required>
+                 </div>
+                 <div class="form-group">
+                     <label>Amount:</label>
+                     <input type="number" name="item_amount" th:value="${tovary.amount}"  class="form-control" required>
+                 </div>
+                 <div class="form-group">
+                     <button class="btn btn-danger" type="submit">Изменить</button>
+                 </div>
+             </div>
+         </form>
+        </div>
+
+    </div>
+
+</div>
+</html>
+
+
+
